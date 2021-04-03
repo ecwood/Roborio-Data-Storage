@@ -1,8 +1,15 @@
 #include "read_psv.h"
 
-std::vector<std::string> Read_PSV::split_string(std::string input, std::string delimiter){
+float Read_PSV::string_to_num(std::string string_number){
+	std::stringstream ss_value(string_number);
+	float float_number;
+	ss_value >> float_number;
+	return float_number;
+}
+
+std::vector<int> Read_PSV::split_string(std::string input, std::string delimiter){
 	std::string temp_string = input;
-	std::vector<std::string> split_vector;
+	std::vector<int> split_vector;
 	int filled_count = 0;
 	for (int index = 0; index < input.length(); index++){
 		if (std::string(1, input[index]) == delimiter){
@@ -12,7 +19,7 @@ std::vector<std::string> Read_PSV::split_string(std::string input, std::string d
 			} else{
 				comma_index++;
 			}
-			split_vector.push_back(input.substr(comma_index, index - comma_index));
+			split_vector.push_back(string_to_num(input.substr(comma_index, index - comma_index)));
 			temp_string[index] = ',';
 		}
 	}
@@ -22,20 +29,18 @@ std::vector<std::string> Read_PSV::split_string(std::string input, std::string d
 void Read_PSV::read_psv(){
 	std::string inputstring;
 	std::fstream input_file(filename);
-
 	if (input_file.is_open()){
 		std::string line;
 		int count = 0;
 		while (getline(input_file, line)){
-			psv_vector.push_back(split_string(line, delimiter));
+			if (count != 0){
+				psv_vector.push_back(split_string(line, delimiter));
+			}
+			count++;
 		}
 	}
 }
 
 float Read_PSV::get_value(int row, int column){
-	std::string string_value = psv_vector[row][column];
-	std::stringstream ss_value(string_value);
-	float int_value;
-	ss_value >> int_value;
-	return int_value;
+	return psv_vector[row][column];
 }
