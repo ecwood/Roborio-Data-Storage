@@ -7,9 +7,9 @@ float Read_PSV::string_to_num(std::string string_number){
 	return float_number;
 }
 
-std::vector<int> Read_PSV::split_string(std::string input, std::string delimiter){
+std::vector<float> Read_PSV::split_string(std::string input, std::string delimiter){
 	std::string temp_string = input;
-	std::vector<int> split_vector;
+	std::vector<float> split_vector;
 	int filled_count = 0;
 	for (int index = 0; index < input.length(); index++){
 		if (std::string(1, input[index]) == delimiter){

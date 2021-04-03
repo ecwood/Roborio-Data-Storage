@@ -20,9 +20,9 @@ private:
 	std::string filename;
 	std::string delimiter;
 
-	std::vector<std::vector<int> > psv_vector;
+	std::vector<std::vector<float> > psv_vector;
 
-	std::vector<int> split_string(std::string input, std::string delimiter);
+	std::vector<float> split_string(std::string input, std::string delimiter);
 	float string_to_num(std::string string_number);
 };
 
